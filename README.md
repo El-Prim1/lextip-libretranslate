@@ -33,11 +33,19 @@ important ones are:
 | `LT_DISABLE_WEB_UI` | Disable the bundled demo web UI. | `true` |
 | `LT_UPDATE_MODELS` | Update Argos models on startup. | `true` |
 | `LT_HOST` | Bind address inside the container. | `0.0.0.0` |
+| `LT_REQ_LIMIT` | Max requests per minute per client (`-1` = unlimited). | `120` |
+| `LT_CHAR_LIMIT` | Max characters per translation request (`-1` = unlimited). | `5000` |
 | `LT_API_KEYS` | Optional comma-separated API keys. Empty = anonymous. | empty |
 | `LT_API_KEYS_DB_PATH` | Optional path for the API-key database. | `/data/api_keys.db` |
 
-`render.yaml` already sets the first four. The commented entries show how to
+`render.yaml` already sets the first six. The commented entries show how to
 enable API keys and persistent storage later.
+
+`LT_REQ_LIMIT` and `LT_CHAR_LIMIT` guard the single-instance deployment against
+abuse and oversized payloads. They apply per client IP; requests carrying a
+valid API key (when enabled) can be given higher per-key limits via
+`ltmanage keys`. If LexTip legitimately needs more, raise the values in
+`render.yaml` and redeploy.
 
 ### API keys
 

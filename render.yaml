@@ -16,6 +16,12 @@ services:
         value: "true"
       - key: LT_HOST
         value: 0.0.0.0
+      # Abuse protection for a single-instance deployment. req-limit is per
+      # client per minute; char-limit caps each /translate payload.
+      - key: LT_REQ_LIMIT
+        value: "120"
+      - key: LT_CHAR_LIMIT
+        value: "5000"
       # Optional: require an API key. Create the key in the LibreTranslate
       # database after the first deploy, then set LT_API_KEYS here.
       # - key: LT_API_KEYS
